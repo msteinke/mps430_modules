@@ -1,0 +1,10 @@
+to compile:
+msp430-gcc -Os -Wall -g -mmcu=msp430g2553 -c main.c
+
+
+linking:
+msp430-gcc  -g  -mmcu=msp430g2553 -o main.elf main.o
+
+
+load to launchpad:
+sudo mspdebug rf2500 'erase' 'load main.elf' 'exit'
