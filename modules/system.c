@@ -6,7 +6,8 @@
     @note   using code from M. P. Hayes, UCECE.
 */
 #include "system.h"
-#include <avr/wdt.h>
+#include <msp430.h>
+//#include <avr/wdt.h>
 
 
 static void system_clock_init (void)
