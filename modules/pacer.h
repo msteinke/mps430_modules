@@ -30,13 +30,6 @@
 */
 
 
-/*
-
-http://mspsci.blogspot.co.nz/2010/08/tutorial-09-timers.html
-
-*/
-
-
 #ifndef PACER_H
 #define PACER_H
 

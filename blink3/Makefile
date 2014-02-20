@@ -18,8 +18,14 @@ $(PROJ).o: $(PROJ).c ../modules/system.h
 system.o: ../modules/system.c ../modules/system.h
 	$(CC) $(CFLAGS) -c $^
 
+timer.o:  ../modules/timer.c ../modules/timer.h ../modules/system.h
+	$(CC) $(CFLAGS) -c $^
+
+pacer.o:  ../modules/pacer.c ../modules/pacer.h ../modules/system.h ../modules/timer.h
+	$(CC) $(CFLAGS) -c $^
+
 # Link: create output file (executable) from object files.
-$(PROJ).elf: $(PROJ).o system.o
+$(PROJ).elf: $(PROJ).o system.o timer.o pacer.o
 	$(CC) $(LDFLAGS) -o $(PROJ).elf $^
 	@echo  " "
 	@echo  "--== Size of firmware ==--"

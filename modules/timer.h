@@ -57,7 +57,7 @@
 
 
 #ifndef TIMER_CLOCK_DIVISOR
-#define TIMER_CLOCK_DIVISOR 256
+#define TIMER_CLOCK_DIVISOR 8
 #endif
 
 /** Rate in Hz that the timer is incremented.  */
@@ -79,6 +79,11 @@ typedef uint16_t timer_tick_t;
 /** Get current time:
     @return current time in ticks.  */
 timer_tick_t timer_get (void);
+
+
+/** Set the timer to a desired time:
+ *  @param the time (in ticks) to set the timer to.*/
+void timer_set (timer_tick_t when);
 
 
 /** Wait until specified time:

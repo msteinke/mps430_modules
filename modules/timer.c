@@ -10,32 +10,29 @@
 #include "timer.h"
 #include "system.h"
 
-/* Timer/counter1 is a 16-bit counter with prescale options 1, 2, 4,
-   8, 16, 32 and 64.  With F_CPU = 1e6 this corresponds to clock rates of
-   1 MHz, 500 kHz, 250 kHz, 125 kHz, 62.5 kHz, 31.25 kHz and 15.625 kHz.
+/* Timer/counterA is a 16-bit counter with prescale options 1, 2, 4
+   and 8.  With F_CPU = 1e6 this corresponds to clock rates of
+   1 MHz, 500 kHz, 250 kHz and 125 kHz.
 
 #if TIMER_CLOCK_DIVISOR == 1
-#define TCCR1B_INIT 0x01
+#define TACTL = TASSEL_2 + ID_0 + MC_2
+#elif TIMER_CLOCK_DIVISOR == 2
+#define TACTL = TASSEL_2 + ID_1 + MC_2
+#elif TIMER_CLOCK_DIVISOR == 4
+#define TACTL = TASSEL_2 + ID_2 + MC_2
 #elif TIMER_CLOCK_DIVISOR == 8
-#define TCCR1B_INIT 0x02
-#elif TIMER_CLOCK_DIVISOR == 64
-#define TCCR1B_INIT 0x03
-#elif TIMER_CLOCK_DIVISOR == 256
-#define TCCR1B_INIT 0x04
-#elif TIMER_CLOCK_DIVISOR == 1024
-#define TCCR1B_INIT 0x05
+#define TACTL = TASSEL_2 + ID_3 + MC_2
 #else
 #error Invalid TIMER_CLOCK_DIVISOR
 #endif
 
-
+*/
 /** Initialise timer.  */
 void timer_init (void)
 {
-    /* Start timer in normal mode so that it rolls over at 65535 to 0.  */
-    TCCR1A = 0x00;
-    TCCR1B = TCCR1B_INIT;
-    TCNT1 = 0;
+    /* Start timer in continous mode so that it rolls over at 65535 to 0.
+     * source clock from SMCLK.  */
+    TACTL = TASSEL_2 + ID_3 + MC_2;    // <------ FIX THIS ID PROBLEM
 }
 
 
@@ -43,9 +40,14 @@ void timer_init (void)
     @return current time in ticks.  */
 timer_tick_t timer_get (void)
 {
-    return TCNT1;
+    return TAR;
 }
-
+/** Set the timer to a desired time:
+ *  @param the time (in ticks) to set the timer to.*/
+void timer_set (timer_tick_t when)
+{
+	TAR = when;
+}
 
 /** Wait until specified time:
     @param when time to sleep until

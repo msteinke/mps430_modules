@@ -10,7 +10,8 @@
 #define SYSTEM_H
 
 /* Data typedefs.  */
-//#include <stdint.h>
+#include <stdint.h>
+
 //typedef uint8_t bool;
 
 /* Useful macros.  */
